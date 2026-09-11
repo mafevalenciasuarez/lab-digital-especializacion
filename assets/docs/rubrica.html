@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Detectives de Historias — Autoevaluación</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Indie+Flower&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #f4efe2;
+    --paper-dark: #e9e0cb;
+    --ink: #3a3226;
+    --teal: #1f6b5c;
+    --box: #e7e0c9;
+    --box-border: #d8cda9;
+    --nada: #e0788a;
+    --poco: #e08f6b;
+    --regular: #eab35e;
+    --bien: #7a9a4f;
+    --muybien: #7fadd4;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Indie Flower', cursive;
+    color: var(--ink);
+    background-color: var(--paper);
+    background-image:
+      radial-gradient(ellipse at 10% 15%, rgba(120,100,60,0.06) 0%, transparent 45%),
+      radial-gradient(ellipse at 85% 80%, rgba(120,100,60,0.07) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 10%, rgba(90,70,40,0.05) 0%, transparent 40%),
+      radial-gradient(ellipse at 20% 90%, rgba(90,70,40,0.05) 0%, transparent 40%),
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.015) 0px, rgba(0,0,0,0.015) 1px, transparent 1px, transparent 3px),
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.012) 0px, rgba(0,0,0,0.012) 1px, transparent 1px, transparent 3px);
+    padding: 40px 16px 60px;
+  }
+
+  /* subtle paper fiber noise via layered svg */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.25  0 0 0 0 0.2  0 0 0 0 0.13  0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .sheet {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--paper);
+    position: relative;
+    padding: 44px 50px 36px;
+    box-shadow: 0 2px 18px rgba(60,45,20,0.18), 0 0 0 1px rgba(0,0,0,0.03);
+    border-radius: 2px;
+  }
+
+  /* worn / deckled edge effect */
+  .sheet::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    pointer-events: none;
+    border-radius: 3px;
+    box-shadow:
+      inset 0 0 40px rgba(90,70,35,0.10),
+      inset 0 0 90px rgba(90,70,35,0.06);
+  }
+
+  h1 {
+    font-family: 'Special Elite', 'Courier New', monospace;
+    text-align: center;
+    color: var(--teal);
+    letter-spacing: 3px;
+    font-size: 2.1rem;
+    margin: 0 0 4px;
+    text-shadow: 1px 1px 0 rgba(31,107,92,0.15);
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: 1.35rem;
+    color: #55503f;
+    margin: 0 0 18px;
+  }
+
+  .meta-line {
+    text-align: center;
+    font-family: 'Special Elite', monospace;
+    font-size: 0.95rem;
+    color: var(--ink);
+    border-bottom: 1px solid #b9ad8c;
+    padding-bottom: 14px;
+    margin: 0 0 22px;
+    letter-spacing: 0.5px;
+  }
+  .meta-line span { margin: 0 6px; }
+
+  .instructions {
+    background: #f4e6c8;
+    border: 1px solid #e6d19f;
+    border-radius: 10px;
+    padding: 14px 26px;
+    text-align: center;
+    font-size: 1.15rem;
+    color: #7a5a1e;
+    max-width: 640px;
+    margin: 0 auto 34px;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 250px repeat(5, 1fr);
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .label-box {
+    background: var(--box);
+    border: 1px solid var(--box-border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-family: 'Special Elite', monospace;
+    font-size: 0.92rem;
+    font-weight: normal;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+
+  .cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .face {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    box-shadow: inset 0 -3px 6px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.15);
+  }
+
+  .radio {
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    border: 1.5px solid #8b8064;
+    background: transparent;
+  }
+
+  .nada    { background: var(--nada); }
+  .poco    { background: var(--poco); }
+  .regular { background: var(--regular); }
+  .bien    { background: var(--bien); }
+  .muybien { background: var(--muybien); }
+
+  .legend {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 26px;
+    margin: 36px 0 10px;
+    font-family: 'Special Elite', monospace;
+    font-size: 0.85rem;
+  }
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .legend-dot {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  footer {
+    text-align: center;
+    font-family: 'Indie Flower', cursive;
+    font-size: 1rem;
+    color: #8a806a;
+    margin-top: 26px;
+  }
+
+  @page {
+    size: A4 landscape;
+    margin: 10mm;
+  }
+
+  @media print {
+    body {
+      padding: 0;
+      background: #fff;
+    }
+    body::before { display: none; }
+    .sheet {
+      max-width: none;
+      box-shadow: none;
+      padding: 18px 22px 14px;
+    }
+    .face, .legend-dot, .instructions, .label-box {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .sheet { padding: 28px 18px; }
+    .row {
+      grid-template-columns: 1fr;
+    }
+    .label-box { margin-bottom: 6px; }
+    .row {
+      display: block;
+      background: transparent;
+    }
+    .row .cell { display: inline-flex; margin: 6px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sheet">
+  <h1>DETECTIVES DE HISTORIAS</h1>
+  <div class="subtitle">Mi autoevaluación</div>
+
+  <div class="meta-line">
+    <span>Nombre: ______________________</span>
+    <span>Grupo: ______________</span>
+    <span>Fecha: ______________________</span>
+  </div>
+
+  <div class="instructions">
+    Colorea o marca la carita que mejor represente cómo te fue en cada parte de la actividad.
+  </div>
+
+  <div class="rows">
+
+    <div class="row">
+      <div class="label-box">Entendí las pistas del cuento y pude imaginar lo que faltaba.</div>
+      <div class="cell"><div class="face muybien">🙂</div><div class="radio"></div></div>
+      <div class="cell"><div class="face bien">😄</div><div class="radio"></div></div>
+      <div class="cell"><div class="face regular">😐</div><div class="radio"></div></div>
+      <div class="cell"><div class="face poco">🙁</div><div class="radio"></div></div>
+      <div class="cell"><div class="face nada">😣</div><div class="radio"></div></div>
+    </div>
+
+    <div class="row">
+      <div class="label-box">Mi historia tiene sentido con las pistas y con el resto del cuento.</div>
+      <div class="cell"><div class="face muybien">🙂</div><div class="radio"></div></div>
+      <div class="cell"><div class="face bien">😄</div><div class="radio"></div></div>
+      <div class="cell"><div class="face regular">😐</div><div class="radio"></div></div>
+      <div class="cell"><div class="face poco">🙁</div><div class="radio"></div></div>
+      <div class="cell"><div class="face nada">😣</div><div class="radio"></div></div>
+    </div>
+
+    <div class="row">
+      <div class="label-box">Revisé mi texto con mi grupo antes de la versión final.</div>
+      <div class="cell"><div class="face muybien">🙂</div><div class="radio"></div></div>
+      <div class="cell"><div class="face bien">😄</div><div class="radio"></div></div>
+      <div class="cell"><div class="face regular">😐</div><div class="radio"></div></div>
+      <div class="cell"><div class="face poco">🙁</div><div class="radio"></div></div>
+      <div class="cell"><div class="face nada">😣</div><div class="radio"></div></div>
+    </div>
+
+    <div class="row">
+      <div class="label-box">Usé palabras como "entonces" o "porque" para conectar mis ideas.</div>
+      <div class="cell"><div class="face muybien">🙂</div><div class="radio"></div></div>
+      <div class="cell"><div class="face bien">😄</div><div class="radio"></div></div>
+      <div class="cell"><div class="face regular">😐</div><div class="radio"></div></div>
+      <div class="cell"><div class="face poco">🙁</div><div class="radio"></div></div>
+      <div class="cell"><div class="face nada">😣</div><div class="radio"></div></div>
+    </div>
+
+    <div class="row">
+      <div class="label-box">Compartí mis ideas con mi grupo y escuché las de mis compañeros.</div>
+      <div class="cell"><div class="face muybien">🙂</div><div class="radio"></div></div>
+      <div class="cell"><div class="face bien">😄</div><div class="radio"></div></div>
+      <div class="cell"><div class="face regular">😐</div><div class="radio"></div></div>
+      <div class="cell"><div class="face poco">🙁</div><div class="radio"></div></div>
+      <div class="cell"><div class="face nada">😣</div><div class="radio"></div></div>
+    </div>
+
+    <div class="row">
+      <div class="label-box">Hice mi mini-libro digital con cuidado y le puse mis propias ideas.</div>
+      <div class="cell"><div class="face muybien">🙂</div><div class="radio"></div></div>
+      <div class="cell"><div class="face bien">😄</div><div class="radio"></div></div>
+      <div class="cell"><div class="face regular">😐</div><div class="radio"></div></div>
+      <div class="cell"><div class="face poco">🙁</div><div class="radio"></div></div>
+      <div class="cell"><div class="face nada">😣</div><div class="radio"></div></div>
+    </div>
+
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><span class="legend-dot nada"></span>Nada</div>
+    <div class="legend-item"><span class="legend-dot poco"></span>Poco</div>
+    <div class="legend-item"><span class="legend-dot regular"></span>Regular</div>
+    <div class="legend-item"><span class="legend-dot bien"></span>Bien</div>
+    <div class="legend-item"><span class="legend-dot muybien"></span>Muy bien</div>
+  </div>
+
+  <footer>Laboratorio de Innovación Educativa · Detectives de Historias · Tercer grado</footer>
+</div>
+
+</body>
+</html>

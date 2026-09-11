@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Informe de campo · Comprensión inferencial — Detectives de Historias</title>
+  <style>
+    @font-face {
+      font-family: "Special Elite";
+      font-style: normal;
+      font-weight: 400;
+      src: url("../fonts/special-elite-latin.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Special Elite";
+      font-style: normal;
+      font-weight: 400;
+      src: url("../fonts/special-elite-latin-ext.woff2") format("woff2");
+      unicode-range: U+0100-024F;
+    }
+    @font-face {
+      font-family: "Indie Flower";
+      font-style: normal;
+      font-weight: 400;
+      src: url("../fonts/indie-flower-latin.woff2") format("woff2");
+    }
+
+    @page {
+      size: A4;
+      margin: 18mm 16mm 20mm 16mm;
+    }
+
+    :root {
+      --ink: #1c1410;
+      --ink-soft: #3a312a;
+      --ink-faded: #5c534a;
+      --paper: #f6f0de;
+      --paper-white: #fffdf6;
+      --stamp: #c0392b;
+      --rule: #c9a24a;
+      --manila: #e6c36a;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      background: #ddd4c0;
+      color: var(--ink);
+    }
+
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 11pt;
+      line-height: 1.45;
+    }
+
+    .sheet {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 16mm 15mm 18mm;
+      background:
+        linear-gradient(180deg, rgba(246, 240, 222, 0.94), rgba(255, 253, 246, 0.96)),
+        #f3ead4;
+      box-shadow: 0 8px 24px rgba(28, 20, 16, 0.18);
+    }
+
+    .mast {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+    }
+
+    .mast h1 {
+      margin: 0 0 4px;
+      font-family: "Special Elite", "Courier New", monospace;
+      font-size: 20pt;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      line-height: 1.15;
+    }
+
+    .kicker, .meta, .label, table caption, .stamp, .tab {
+      font-family: "Special Elite", "Courier New", monospace;
+    }
+
+    .kicker {
+      margin: 0;
+      font-size: 9pt;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-faded);
+    }
+
+    .tab {
+      flex: 0 0 auto;
+      padding: 6px 10px;
+      background: var(--manila);
+      border: 1px solid #b48a2e;
+      font-size: 9pt;
+      letter-spacing: 0.08em;
+    }
+
+    .stamp {
+      float: right;
+      margin: 4px 0 10px 14px;
+      padding: 6px 10px;
+      border: 3px solid var(--stamp);
+      color: var(--stamp);
+      font-size: 10pt;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transform: rotate(-8deg);
+    }
+
+    h2 {
+      margin: 18px 0 8px;
+      font-family: "Special Elite", "Courier New", monospace;
+      font-size: 13.5pt;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 3px;
+    }
+
+    h3 {
+      margin: 12px 0 6px;
+      font-size: 11.5pt;
+    }
+
+    p, li { text-align: justify; }
+    p { margin: 0 0 8px; }
+
+    .ficha {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 14px;
+      font-size: 10.5pt;
+    }
+
+    .ficha th, .ficha td {
+      border: 1px solid #d7c39a;
+      padding: 5px 8px;
+      vertical-align: top;
+    }
+
+    .ficha th {
+      width: 34%;
+      background: #f0e3bc;
+      text-align: left;
+      font-family: "Special Elite", "Courier New", monospace;
+      font-weight: 400;
+      font-size: 9.5pt;
+    }
+
+    .story {
+      background: var(--paper-white);
+      border: 1px solid #d8c8a0;
+      padding: 12px 14px;
+      margin: 8px 0 12px;
+    }
+
+    .story h3 {
+      margin-top: 0;
+      font-family: "Special Elite", "Courier New", monospace;
+      font-weight: 400;
+      text-align: center;
+    }
+
+    .story p {
+      text-indent: 1.1em;
+    }
+
+    .note {
+      font-family: "Indie Flower", cursive;
+      font-size: 13pt;
+      line-height: 1.25;
+      background: #ffe566;
+      padding: 8px 12px;
+      margin: 10px 0;
+    }
+
+    ol.instrumento, ul { margin: 6px 0 10px 18px; padding: 0; }
+    ol.instrumento li, ul li { margin-bottom: 5px; }
+
+    table.data {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 12px;
+      font-size: 10pt;
+    }
+
+    table.data th, table.data td {
+      border: 1px solid #cbb88a;
+      padding: 5px 7px;
+    }
+
+    table.data th {
+      background: #1c1410;
+      color: #fffdf6;
+      font-family: "Special Elite", "Courier New", monospace;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+    }
+
+    table.data td.num, table.data th.num { text-align: center; width: 14%; }
+    table.data tr:nth-child(even) td { background: #fff7e6; }
+
+    .callout {
+      border-left: 4px solid var(--stamp);
+      padding: 6px 10px;
+      background: #fff1d4;
+      margin: 10px 0 12px;
+    }
+
+    .refs { font-size: 10pt; }
+    .refs li { margin-bottom: 4px; text-align: left; }
+
+    footer.pagefoot {
+      margin-top: 16px;
+      padding-top: 6px;
+      border-top: 1px solid #cbb88a;
+      font-size: 8.5pt;
+      color: var(--ink-faded);
+      display: flex;
+      justify-content: space-between;
+      font-family: "Special Elite", "Courier New", monospace;
+    }
+
+    @media print {
+      html, body { background: #fff; }
+      .sheet {
+        width: auto;
+        min-height: auto;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        background: #fffdf8;
+      }
+      .stamp { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      table.data th, .ficha th, .note, .callout, .tab {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      h2 { break-after: avoid; }
+      .story, table.data, .callout { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <article class="sheet">
+    <header class="mast">
+      <div>
+        <p class="kicker">Universidad de Cartagena · Especialización en Didáctica y TIC</p>
+        <h1>Informe de campo · Comprensión inferencial</h1>
+        <p class="kicker">Laboratorio Detectives de Historias · Grado 3.° · Lenguaje</p>
+      </div>
+      <div class="tab">Expediente 03-PRI</div>
+    </header>
+
+    <div class="stamp">En diagnóstico</div>
+
+    <p>Este informe documenta las fases <strong>Empatizar</strong> y <strong>Definir</strong> del laboratorio de innovación educativa <em>Detectives de Historias</em>, aplicado en el Colegio Güipas y Chavos. El tablero digital del laboratorio condensa los hallazgos; este documento aporta el relato diagnóstico, el instrumento, la línea de base y la formulación del reto.</p>
+
+    <h2>1. Ficha del caso</h2>
+    <table class="ficha">
+      <tr><th>Institución</th><td>Colegio Güipas y Chavos. Institución educativa privada, de carácter mixto y calendario A. Ofrece preescolar y básica primaria. Lema institucional: <em>Forming for life with love and respect</em>.</td></tr>
+      <tr><th>Sede / ubicación</th><td>Carrera 7a. No. 19-54 / 64, barrio Quirinal, Ibagué (Tolima).</td></tr>
+      <tr><th>Grupo focal</th><td>Grado 3.° de básica primaria. 25 estudiantes, entre 8 y 9 años.</td></tr>
+      <tr><th>Área / asignatura</th><td>Lenguaje · comprensión lectora y producción escrita.</td></tr>
+      <tr><th>Equipo del laboratorio</th><td>Rosa Lina Ramírez y María Fernanda Valencia Suárez.</td></tr>
+      <tr><th>Programa académico</th><td>Especialización en Didáctica y TIC, Universidad de Cartagena.</td></tr>
+      <tr><th>Fecha del informe</th><td>Septiembre de 2026.</td></tr>
+    </table>
+
+    <h2>2. Contexto y justificación</h2>
+    <p>El Colegio Güipas y Chavos forma en un ambiente de respeto y cercanía en los primeros grados. En 3.° los estudiantes ya decodifican con fluidez relativa, pero la lectura escolar sigue anclada a la localización de datos explícitos. La escritura, por su parte, se resuelve con frecuencia como copia de un molde: se reproduce la estructura del cuento leído, sin plan, sin borrador y sin revisión.</p>
+    <p>Ese patrón coincide con lo que los <a href="https://www.mineducacion.gov.co/">Derechos Básicos de Aprendizaje de Lenguaje</a> y los Estándares Básicos de Competencias (MEN, 2006) esperan superar en este grado: inferir información no dicha y producir textos propios con un proceso visible. El laboratorio no parte de un déficit de “amor por la lectura”, sino de un vacío didáctico concreto: <strong>el texto se entiende en lo literal y no se investiga en lo implícito</strong>.</p>
+
+    <h2>3. Relato diagnóstico: <em>El sobre sin nombre</em></h2>
+    <p>Se diseñó un cuento breve con un <strong>vacío deliberado</strong>: el narrador nunca dice quién dejó el sobre ni qué quería pedir. Las pistas están en el escenario, no en una frase final. El texto se leyó en voz alta y luego de manera individual.</p>
+
+    <section class="story">
+      <h3>El sobre sin nombre</h3>
+      <p>El lunes, Camila llegó temprano a la biblioteca del colegio. Doña Marta, la bibliotecaria, abría las ventanas y dejaba entrar el aire del patio. Sobre la mesa de los diccionarios había un sobre café, liso, sin sello y sin nombre.</p>
+      <p>Camila lo giró. En una esquina, alguien había dibujado una ventana pequeña con tres rayas. Adentro no había carta. Solo un papel doblado dos veces. En el papel se leía, con lápiz rojo:</p>
+      <p style="text-indent:0; font-style:italic; text-align:center;">«Si encuentras esto, por favor no lo guardes. Yo quería…»</p>
+      <p>La frase se cortaba ahí. El resto de la hoja estaba en blanco, con una mancha redonda, como de agua.</p>
+      <p>En el piso, junto a la mesa, había dos huellas de barro que no coincidían con los zapatos de Camila ni con los de doña Marta. El sello de la biblioteca —ese que doña Marta pone en cada libro prestado— no estaba en su cajón. La ventana del fondo estaba entreabierta, aunque doña Marta juraba haberla cerrado el viernes.</p>
+      <p>—¿Alguien preguntó por un sobre? —dijo Camila.</p>
+      <p>Doña Marta negó con la cabeza. En el registro de préstamos del viernes solo aparecía un nombre: Tomás, de 3.°, había devuelto <em>El barco de papel</em> y no había pedido nada más.</p>
+      <p>Camila guardó el papel en el sobre y lo dejó otra vez sobre la mesa. El reloj de la biblioteca dio las siete y diez. En el patio ya se oían risas. Camila miró la ventana dibujada, luego la ventana de verdad, y se quedó pensando en la palabra que no estaba.</p>
+    </section>
+
+    <p class="note">Vacío del caso: el texto no nombra al autor del sobre, no completa el pedido y no cierra el misterio. Inferir exige cruzar huellas, sello, ventana, lápiz rojo y el préstamo de Tomás.</p>
+
+    <h2>4. Instrumento diagnóstico</h2>
+    <p>Prueba breve de 8 ítems (4 literales y 4 inferenciales) más una consigna de escritura. Tiempo estimado: 35 minutos. Lectura mediada por la docente y respuesta individual.</p>
+
+    <h3>4.1 Comprensión literal</h3>
+    <ol class="instrumento">
+      <li>¿Dónde encuentra Camila el sobre?</li>
+      <li>¿Qué hay dentro del sobre?</li>
+      <li>¿Quién es doña Marta y qué hace al inicio del cuento?</li>
+      <li>¿Qué objetos o marcas quedan en el piso y en la sala, según el texto?</li>
+    </ol>
+
+    <h3>4.2 Comprensión inferencial</h3>
+    <ol class="instrumento" start="5">
+      <li>¿Por qué el sobre no tiene nombre? Usa al menos una pista del cuento.</li>
+      <li>¿Qué pudo querer pedir la persona que escribió «Yo quería…»?</li>
+      <li>¿Quién pudo dejar el sobre? Justifica con dos pistas (no inventes datos que el texto no sugiere).</li>
+      <li>¿Cómo se siente Camila al final? El narrador no lo dice: apóyate en lo que hace y mira.</li>
+    </ol>
+
+    <h3>4.3 Producción escrita</h3>
+    <p><strong>Consigna:</strong> Completa el final de <em>El sobre sin nombre</em> en 8 a 12 líneas. Antes de escribir: 1) anota tres pistas; 2) redacta un borrador; 3) cambia al menos una frase al revisar. No copies el final de otro cuento conocido.</p>
+
+    <h2>5. Línea de base (n = 25)</h2>
+    <p>Los siguientes resultados corresponden a la aplicación diagnóstica inicial en el grado 3.°. Se expresan en aciertos sobre 25. No sustituyen una evaluación estandarizada nacional; sí establecen el punto de partida del laboratorio.</p>
+
+    <table class="data">
+      <caption style="caption-side: bottom; text-align: left; padding-top: 4px; color: #5c534a;">Tabla 1. Aciertos por ítem de comprensión</caption>
+      <thead>
+        <tr>
+          <th>Ítem</th>
+          <th>Tipo</th>
+          <th class="num">Aciertos</th>
+          <th class="num">%</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1. Lugar del sobre</td><td>Literal</td><td class="num">22</td><td class="num">88</td></tr>
+        <tr><td>2. Contenido del sobre</td><td>Literal</td><td class="num">21</td><td class="num">84</td></tr>
+        <tr><td>3. Identidad de doña Marta</td><td>Literal</td><td class="num">20</td><td class="num">80</td></tr>
+        <tr><td>4. Huellas, sello y ventana</td><td>Literal</td><td class="num">18</td><td class="num">72</td></tr>
+        <tr><td>5. Motivo del sobre sin nombre</td><td>Inferencial</td><td class="num">10</td><td class="num">40</td></tr>
+        <tr><td>6. Pedido incompleto</td><td>Inferencial</td><td class="num">8</td><td class="num">32</td></tr>
+        <tr><td>7. Autor probable con pistas</td><td>Inferencial</td><td class="num">9</td><td class="num">36</td></tr>
+        <tr><td>8. Estado emocional no dicho</td><td>Inferencial</td><td class="num">7</td><td class="num">28</td></tr>
+      </tbody>
+    </table>
+
+    <table class="data">
+      <caption style="caption-side: bottom; text-align: left; padding-top: 4px; color: #5c534a;">Tabla 2. Promedios por nivel y proceso de escritura</caption>
+      <thead>
+        <tr>
+          <th>Indicador</th>
+          <th class="num">Estudiantes</th>
+          <th class="num">%</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Promedio de acierto literal (ítems 1–4)</td><td class="num">20,3 / 25</td><td class="num">81</td></tr>
+        <tr><td>Promedio de acierto inferencial (ítems 5–8)</td><td class="num">8,5 / 25</td><td class="num">34</td></tr>
+        <tr><td>Planificó (lista, dibujo o pistas anotadas)</td><td class="num">5</td><td class="num">20</td></tr>
+        <tr><td>Escribió un final propio con cierre</td><td class="num">8</td><td class="num">32</td></tr>
+        <tr><td>Revisó al menos una frase</td><td class="num">3</td><td class="num">12</td></tr>
+        <tr><td>Reprodujo el molde del cuento leído, sin plan ni revisión</td><td class="num">17</td><td class="num">68</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Hallazgo central.</strong> El grupo lee el texto; no va más allá de lo literal. Escribe copiando el molde: sin plan, sin borrador, sin revisión. La brecha entre 81&nbsp;% literal y 34&nbsp;% inferencial es el hueco que el laboratorio investiga.
+    </div>
+
+    <h2>6. Definición del problema</h2>
+    <p>El problema no es “no les gusta leer”. El problema didáctico es este:</p>
+    <p><strong>Los estudiantes de 3.° del Colegio Güipas y Chavos localizan información explícita en un cuento breve, pero no sostienen inferencias con evidencia del texto ni recorren un ciclo visible de planificación, redacción y revisión cuando deben escribir un final propio.</strong></p>
+    <p><strong>Pregunta del laboratorio:</strong> ¿Cómo fortalecer la comprensión inferencial y el proceso de producción escrita, mediante la investigación de un vacío narrativo mediado por TIC, en 25 estudiantes de tercer grado?</p>
+    <p><strong>Objetivo de la secuencia:</strong> Investigar un vacío deliberado, debatir con evidencia y escribir la versión en un mini-libro digital.</p>
+
+    <h2>7. Alineación curricular (MEN)</h2>
+    <ul>
+      <li><strong>Estándares Básicos de Competencias en Lenguaje</strong> (MEN, 2006), ciclo 1.°–3.°: comprender textos literarios; producir textos narrativos con propósito y destinatario.</li>
+      <li><strong>Derechos Básicos de Aprendizaje de Lenguaje, grado 3.°:</strong> interpreta información implícita; escribe textos narrativos con inicio, nudo y desenlace; revisa lo escrito para mejorar claridad.</li>
+      <li><strong>Lineamientos curriculares de Lengua Castellana:</strong> la lectura como diálogo con el texto y la escritura como proceso, no como producto único.</li>
+    </ul>
+    <p>La mediación TIC se justifica solo si hace visible la evidencia (tablero de pistas), el debate (votación argumentada) y el proceso de escritura (archivo compartido y mini-libro). No se introduce tecnología para ilustrar el cuento después de haberlo “terminado” en el cuaderno.</p>
+
+    <h2>8. Mediación TIC prevista</h2>
+    <table class="data">
+      <thead>
+        <tr>
+          <th>Recurso</th>
+          <th>Función en el caso</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Padlet</td><td>Tablero de pistas: hipótesis y evidencias del vacío.</td></tr>
+        <tr><td>Mentimeter</td><td>Debate en caliente: votar inferencias con justificación.</td></tr>
+        <tr><td>Genially</td><td>Infografía del caso: el vacío, las pistas y el mini-libro.</td></tr>
+        <tr><td>Documentos de Google</td><td>Ciclo planear–redactar–revisar en un mismo archivo.</td></tr>
+        <tr><td>Canva Educación</td><td>Ilustración de escenas y portada del mini-libro.</td></tr>
+        <tr><td>Book Creator</td><td>Producto final: mini-libro digital ilustrado.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>9. Criterios de evaluación del laboratorio</h2>
+    <ul>
+      <li>La inferencia cita al menos una pista textual (huellas, sello, ventana, lápiz, préstamo).</li>
+      <li>El escrito propio no copia el desenlace de otro cuento escolar.</li>
+      <li>Quedan rastros del proceso: plan, borrador y al menos una revisión.</li>
+      <li>El mini-libro digital publica una versión debatida, no un dibujo suelto.</li>
+    </ul>
+
+    <h2>10. Referencias</h2>
+    <ul class="refs">
+      <li>Colegio Güipas y Chavos. (2021). Sitio institucional. <a href="https://colegioguipasychavos.edu.co/">https://colegioguipasychavos.edu.co/</a></li>
+      <li>Ministerio de Educación Nacional. (2006). <em>Estándares Básicos de Competencias en Lenguaje, Matemáticas, Ciencias y Ciudadanas</em>. Bogotá: MEN.</li>
+      <li>Ministerio de Educación Nacional. (2016). <em>Derechos Básicos de Aprendizaje. Lenguaje</em>. Bogotá: MEN.</li>
+      <li>Ministerio de Educación Nacional. (1998). <em>Lineamientos curriculares de Lengua Castellana</em>. Bogotá: MEN.</li>
+    </ul>
+
+    <footer class="pagefoot">
+      <span>Detectives de Historias · Informe de campo</span>
+      <span>Expediente 03-PRI · Uso académico</span>
+    </footer>
+  </article>
+</body>
+</html>
